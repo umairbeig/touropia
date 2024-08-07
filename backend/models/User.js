@@ -19,7 +19,9 @@ const userSchema=mongoose.Schema({
         required:false
     },
     id:{
-        type:String
+        type:String,
+       
     }
 });
+
 export default mongoose.model("User",userSchema);
