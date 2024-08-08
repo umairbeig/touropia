@@ -1,14 +1,26 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-
+import React from 'react';
 import './App.css';
+import { toast,ToastContainer } from "react-toastify";
+import {Routes,Router,BrowserRouter, Route} from "react-router-dom"
 
-import { Login } from "./components/Login.js";
-
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Home } from './pages/Home';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 function App() {
   return (
     <div className="App">
-     <Login></Login>
+      <ToastContainer/>
+      <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/register' element={<Register/>}></Route>
+      
+      </Routes>
+      </BrowserRouter>
+      
     </div>
   );
 }
