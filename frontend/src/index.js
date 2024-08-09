@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './store/store.js';
+import 'react-toastify/dist/ReactToastify.css'
 
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  
+  <StrictMode>
+  <Provider store={store}>
 
     <App />
-    
+  </Provider>
+  </StrictMode>
 
-  </React.StrictMode>
+
+
 );
 
 // If you want to start measuring performance in your app, pass a function

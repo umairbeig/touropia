@@ -9,9 +9,10 @@ const url = "mongodb+srv://umairbeig:Cl6NMySIkVQOPZjk@cluster-tour-app.4jwauri.m
 
 app.use(bodyParser.json({limit:"30mb",extended:true}));
 app.use(bodyParser.urlencoded({limit:"30mb",extended:true}));
+
+app.use(cors());
 app.use("/users",router1); //http://localhost:3000/users/signup
 
-app.use(cors);
 mongoose
 .connect(url)
 .then(() => {

@@ -38,11 +38,13 @@ export const signup = async (req, res) => {
 }
 export const signin = async (req, res) => {
     const { email, password } = req.body;
+
     try {
         const user = await userModel.findOne({ email });
 
         if (!user) {
             res.status(400).json({ message: "user doesnt exixt" });
+            return
         }
 
         const correctPassword = await bcrypt.compare(password, user.password);

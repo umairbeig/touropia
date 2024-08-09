@@ -1,12 +1,17 @@
 import { MDBCard, MDBCardBody, MDBCardFooter, MDBInput, MDBValidation, MDBSpinner, MDBIcon, MDBBtn } from "mdb-react-ui-kit"
 import { useState } from "react"
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch} from "react-redux"
+import { login } from "../redux/Slice";
+import { toast } from "react-toastify";
 
 
 export const Login = () => {
     const [form, setForm] = useState({ email: "", password: "" });
     // const { email, password } = form;
+    const navigate=useNavigate()
+
+    
 
     const handleChange = (e) => {
         // e.preventDefault()
@@ -14,9 +19,14 @@ export const Login = () => {
         console.log(value)
         setForm({ ...form, [name]: value });
     }
+    const dispatch=useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(form.email&&form.password){
+        dispatch(login({"form":form,"navigate":navigate,"toast":toast}));
+        }
+
     }
     return (
         <div style={{ margin: "auto", alignContent: "center", marginTop: "120px" }}>
