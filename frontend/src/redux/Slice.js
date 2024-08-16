@@ -1,5 +1,5 @@
-import React, { act } from "react";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+
+import { createAsyncThunk, createSlice, isRejected, isRejectedWithValue, unwrapResult } from "@reduxjs/toolkit"
 import axios from "axios"
 
 
@@ -8,46 +8,55 @@ const initialState = {
     error: "",
     loading: false
 }
-const url = 'http://localhost:5000/users/signin'
-
-export const login = createAsyncThunk("tour/login", async (data) => {
-    try {
-        const response = await axios.post(url, data.form);
-        data.toast.success("login successful")
+const url = 'http://localhost:5000/users';
+export const login = createAsyncThunk("tour/login", async (data ,{rejectWithValue}) => {
+    try{
+   
+        const response = await axios.post(`${url}/signin`, data.form);
+        data.toast.success("Login successful");
         data.navigate("/");
-        console.log(response.data);
+        console.log(response.data)
         return response.data;
     }
-    catch (error) {
-        return console.log(error);
+    catch(error){
+        // data.toast.error("Invalid Login");
+        console.log(error.response.data)
+        // 
+        return rejectWithValue(error.response.data);
     }
+    
+
 })
+export const register = createAsyncThunk("tour/register", async (data) => {
 
 
+    const response = await axios.post(`${url}/signup`, data.form);
+    data.toast.success(" Signup Successful");
+    data.navigate("/login");
+    console.log(response.data);
+    return response.data;
+
+
+})
 const slice1 = createSlice({
     name: "tour",
     initialState: initialState,
     reducers: {},
-    extraReducers:(builder) =>{
+    extraReducers: (builder) => {
         builder.
             addCase(login.fulfilled, (state, action) => {
-               
-                state.loading=false;
-                localStorage.setItem("profile",JSON.stringify({...action.payload}));
-                state.user=action.payload;
+
+                state.loading = false;
+                localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
+                state.user = action.payload;
             })
-            .addCase(login.pending, (state, action) => {
-                state.loading=true;
+            .addCase(login.pending, (state) => {
+                state.loading = true;
             })
             .addCase(login.rejected, (state, action) => {
-                state.loading=false;
-                state.error=action.payload.message;
+                state.loading = false;
+                state.error = action.payload.message;
             })
     }
-
-
 })
-
-
-
 export default slice1.reducer;

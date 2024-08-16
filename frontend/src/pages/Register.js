@@ -1,18 +1,23 @@
 import React, { useEffect } from "react"
 import { MDBBtn, MDBCard, MDBCardBody, MDBFooter, MDBIcon, MDBInput, MDBValidation } from "mdb-react-ui-kit"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { register } from "../redux/Slice"
+import { toast } from "react-toastify"
 
 export const Register = () => {
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [form, setForm] = useState({ firstName: "", lastName: "", email: "", password: "" })
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(form);
-        const fx = { firstName: "", lastName: "", email: "", password: "" }
-        setForm(fx);
-
+        dispatch(register({ "form": form, "navigate": navigate, "toast": toast }));
+        // console.log(form);
+        // const fx = { firstName: "", lastName: "", email: "", password: "" }
+        // setForm(fx);
     }
 
     const handleChange = (e) => {

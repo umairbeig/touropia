@@ -7,6 +7,7 @@ const secret = "test";
 
 export const signup = async (req, res) => {
     const { email, password, firstName, lastName } = req.body;
+    console.log(req.body)
     try {
         const oldUser = await userModel.findOne({ email });
         if (oldUser) {
@@ -43,7 +44,7 @@ export const signin = async (req, res) => {
         const user = await userModel.findOne({ email });
 
         if (!user) {
-            res.status(400).json({ message: "user doesnt exixt" });
+            res.status(400).json({ message: "user doesn't exist" });
             return
         }
 
